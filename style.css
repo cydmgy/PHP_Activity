@@ -1,0 +1,493 @@
+:root {
+  --genshin-emerald: #1b4332;
+  --genshin-forest: #2d6a4f;
+  --genshin-sage: #52b788;
+  --genshin-gold: #f4a261;
+  --genshin-amber: #e76f51;
+  --genshin-sky: #48cae4;
+  --genshin-deep-sky: #0077b6;
+  --genshin-night: #0b132b;
+  --genshin-night-card: #1c2541;
+  --genshin-cream: #fbfbf2;
+  
+  --font-sans: 'Poppins', sans-serif;
+  --font-serif: 'Cinzel', serif;
+  --font-japanese: 'Zen Maru Gothic', sans-serif;
+  
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*--Global Base Styles--*/
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #2b2d42;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+  letter-spacing: 0.5px;
+}
+
+/*---Navigation bar---*/
+.genshin-navbar {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all var(--transition-smooth);
+}
+
+.genshin-navbar .navbar-brand {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--genshin-emerald);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.genshin-navbar .nav-link {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #4a5568;
+  padding: 8px 14px !important;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.genshin-navbar .nav-link:hover,
+.genshin-navbar .nav-link.active {
+  color: var(--genshin-forest);
+  background-color: rgba(45, 106, 79, 0.08);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(8, 28, 21, 0.45) 0%, rgba(27, 67, 50, 0.7) 100%),
+              url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat fixed;
+  color: #ffffff;
+  padding: 120px 0 80px;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.18;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.hero-lead {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 650px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 32px;
+}
+
+.btn-hero-primary {
+  background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 34px;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 25px rgba(231, 111, 81, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-hero-primary:hover {
+  background: linear-gradient(135deg, #e76f51 0%, #d94826 100%);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(231, 111, 81, 0.5);
+}
+
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 13px 30px;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+/* Stats Counter Box */
+.hero-stats-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f4a261;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- Section Headers --- */
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-japanese);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--genshin-forest);
+  background: rgba(45, 106, 79, 0.1);
+  padding: 4px 16px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+#characters .section-tag {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#characters .section-title {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+#characters .section-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Character Portfolio Section --- */
+.character-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.character-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(45, 106, 79, 0.14);
+  border-color: rgba(45, 106, 79, 0.2);
+}
+
+.character-img-box {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  background-color: #1e293b;
+}
+
+.character-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.character-card:hover .character-img {
+  transform: scale(1.08);
+}
+
+.character-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.character-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.character-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.character-desc {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.character-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.trait-tag {
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.character-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-story {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--genshin-forest);
+  background: none;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.btn-story:hover {
+  color: var(--genshin-emerald);
+  gap: 10px;
+}
+
+/* --- Featured Films Section --- */
+.films-section {
+  background: linear-gradient(180deg, #f8f9fa 0%, #edf2f4 100%);
+  padding: 90px 0;
+}
+
+#films .section-tag {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#films .section-title {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+#films .section-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.film-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.film-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1);
+}
+
+.film-poster-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.film-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.film-card:hover .film-poster {
+  transform: scale(1.05);
+}
+
+.film-info {
+  padding: 22px;
+}
+
+.film-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.film-meta {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+/* --- About & Lore Section --- */
+.about-section {
+  padding: 100px 0;
+  background: #ffffff;
+}
+
+#about .section-tag {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#about .section-title {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+#about .text-muted {
+  color: rgba(255, 255, 255, 0.88) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+#about .lore-title {
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+#about .lore-desc {
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+#about .lore-icon-box {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.lore-feature-card {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.lore-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(45, 106, 79, 0.12);
+  color: var(--genshin-forest);
+  display: grid;
+  place-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.lore-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.lore-desc {
+  font-size: 0.92rem;
+  color: #64748b;
+  line-height: 1.55;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+  
+  .hero-lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-stats-card {
+    margin-top: 36px;
+  }
+}

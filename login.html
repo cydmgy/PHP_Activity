@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Genshin Impact Login Page">
+  <title>Genshin Impact - Login</title>
+  <link rel="stylesheet" href="auth.css">
+  <link href="https://fonts.googleapis.com/css2?family=Valley+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="teyvat-theme" style="background-image: url('https://upload-os-bbs.hoyolab.com/upload/2021/05/22/21867498/19fb8c0ff0e27428841a05ddbfc0851d_3933469727756591456.jpg'); background-size: cover; background-position: center">
+  <main class="page-wrapper">
+    <div class="auth-card">
+      <header class="card-header">
+        <h1 class="brand-title">Genshin Impact</h1>
+      </header>
+
+      <div id="login-message" class="form-message" role="alert" aria-live="polite"></div>
+
+      <form action="#" method="POST" class="auth-form" autocomplete="on" novalidate>
+        <div class="form-group">
+          <label for="username" class="sr-only">Username or Email</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="form-control" 
+              placeholder="Username or Email" 
+              required 
+              autocomplete="username"
+            >
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+              </svg>
+            </span>
+          </div>
+          <span id="username-error" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="sr-only">Password</label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-control" 
+              placeholder="Password" 
+              required 
+              autocomplete="current-password"
+            >
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+              </svg>
+            </span>
+          </div>
+          <span id="password-error" class="field-error"></span>
+        </div>
+
+        <div class="options-row">
+          <label class="checkbox-label" for="show-password">
+            <input type="checkbox" id="show-password" class="custom-checkbox" aria-controls="password">
+            <span>Show password</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password</a>
+        </div>
+
+        <button type="submit" class="btn-submit" id="loginBtn">Log In</button>
+
+      </form>
+
+      <footer class="card-footer">
+        <p>New Traveler? <a href="register.html" class="switch-link">Create an account</a></p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      'use strict';
+
+      // Dummy Acc
+      var DUMMY_USER = {
+        username: 'Dummy1',
+        email: 'dummy1@gmail.com',
+        password: 'Test@1234'
+      };
+      var MAX_ATTEMPTS = 5;
+      var LOCKOUT_MS = 1 * 60 * 1000; // 1 minute
+      var STORAGE_ATTEMPTS = 'ge_loginFailedAttempts';
+      var STORAGE_LOCKOUT_UNTIL = 'ge_loginLockoutUntil';
+      var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Validation helpers 
+      function showFieldError($field, message) {
+        $field.addClass('is-invalid');
+        $('#' + $field.attr('id') + '-error').text(message);
+      }
+      function clearFieldError($field) {
+        $field.removeClass('is-invalid');
+        $('#' + $field.attr('id') + '-error').text('');
+      }
+      function showFormMessage($msg, text, type) {
+        $msg
+          .text(text)
+          .removeClass('form-message--error form-message--success')
+          .addClass('form-message--' + type);
+      }
+      function clearFormMessage($msg) {
+        $msg.text('').removeClass('form-message--error form-message--success');
+      }
+
+      // Login form 
+      var $loginBtn = $('#loginBtn');
+      var $loginForm = $loginBtn.closest('form');
+      var $username = $('#username');
+      var $password = $('#password');
+      var $showPassword = $('#show-password');
+      var $loginMsg = $('#login-message');
+      var countdownTimer = null;
+
+      $showPassword.on('change', function () {
+        $password.attr('type', this.checked ? 'text' : 'password');
+      });
+
+      function isLockedOut() {
+        var lockoutUntil = parseInt(localStorage.getItem(STORAGE_LOCKOUT_UNTIL), 10) || 0;
+        return lockoutUntil > Date.now();
+      }
+
+      function startCountdown() {
+        var lockoutUntil = parseInt(localStorage.getItem(STORAGE_LOCKOUT_UNTIL), 10) || 0;
+        var remaining = lockoutUntil - Date.now();
+
+        if (countdownTimer) {
+          clearTimeout(countdownTimer);
+        }
+
+        if (remaining <= 0) {
+          localStorage.removeItem(STORAGE_LOCKOUT_UNTIL);
+          localStorage.removeItem(STORAGE_ATTEMPTS);
+          $loginBtn.prop('disabled', false);
+          clearFormMessage($loginMsg);
+          return;
+        }
+
+        $loginBtn.prop('disabled', true);
+        showFormMessage(
+          $loginMsg,
+          'Login temporarily locked after 5 failed attempts. Try again in 1 minute.',
+          'error'
+        );
+
+        countdownTimer = setTimeout(function () {
+          localStorage.removeItem(STORAGE_LOCKOUT_UNTIL);
+          localStorage.removeItem(STORAGE_ATTEMPTS);
+          $loginBtn.prop('disabled', false);
+          clearFormMessage($loginMsg);
+        }, remaining);
+      }
+
+      if (isLockedOut()) {
+        startCountdown();
+      }
+
+      $username.on('input', function () { clearFieldError($username); });
+      $password.on('input', function () { clearFieldError($password); });
+
+      $loginForm.on('submit', function (e) {
+        e.preventDefault();
+        clearFormMessage($loginMsg);
+
+        if (isLockedOut()) {
+          startCountdown();
+          return;
+        }
+
+        var usernameVal = $username.val().trim();
+        var passwordVal = $password.val();
+        var valid = true;
+
+        if (usernameVal === '') {
+          showFieldError($username, 'Username or email is required.');
+          valid = false;
+        } else if (usernameVal.indexOf('@') !== -1 && !EMAIL_REGEX.test(usernameVal)) {
+          showFieldError($username, 'Please enter a valid email address.');
+          valid = false;
+        } else {
+          clearFieldError($username);
+        }
+
+        if (passwordVal === '') {
+          showFieldError($password, 'Password is required.');
+          valid = false;
+        } else {
+          clearFieldError($password);
+        }
+
+        if (!valid) {
+          return;
+        }
+
+        if ((usernameVal === DUMMY_USER.username || usernameVal.toLowerCase() === DUMMY_USER.email) &&
+          passwordVal === DUMMY_USER.password) {
+          localStorage.removeItem(STORAGE_ATTEMPTS);
+          localStorage.removeItem(STORAGE_LOCKOUT_UNTIL);
+          window.location.href = 'landing_page.html';
+          return;
+        }
+
+        var attempts = (parseInt(localStorage.getItem(STORAGE_ATTEMPTS), 10) || 0) + 1;
+        localStorage.setItem(STORAGE_ATTEMPTS, attempts);
+
+        if (attempts >= MAX_ATTEMPTS) {
+          localStorage.setItem(STORAGE_LOCKOUT_UNTIL, Date.now() + LOCKOUT_MS);
+          startCountdown();
+        } else {
+          showFormMessage(
+            $loginMsg,
+            'Incorrect username/email or password. ' + (MAX_ATTEMPTS - attempts) + ' attempt(s) left before lockout.',
+            'error'
+          );
+        }
+      });
+    });
+  </script>
+</body>
+</html>
