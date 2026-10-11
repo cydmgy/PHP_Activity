@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Genshin Impact Registration Page">
   <title>Genshin Impact - Create Account</title>
-  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="css/auth.css">
   <link href="https://fonts.googleapis.com/css2?family=Valley+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body class="teyvat-theme" style="background-image: url('https://upload-os-bbs.hoyolab.com/upload/2021/05/22/21867498/19fb8c0ff0e27428841a05ddbfc0851d_3933469727756591456.jpg'); background-size: cover; background-position: center">
@@ -117,7 +117,7 @@
       </form>
 
       <footer class="card-footer">
-        <p>Already a Traveler? <a href="index.html" class="switch-link">Log in</a></p>
+        <p>Already a Traveler? <a href="index.php" class="switch-link">Log in</a></p>
       </footer>
 
     </div>
@@ -227,7 +227,7 @@
 
         showFormMessage($registerMsg, 'Account created! Redirecting to login...', 'success');
         window.setTimeout(function () {
-          window.location.href = 'index.html';
+          window.location.href = 'index.php';
         }, 900);
       });
     });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Genshin Impact Login Page">
   <title>Genshin Impact - Login</title>
-  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="css/auth.css">
   <link href="https://fonts.googleapis.com/css2?family=Valley+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body class="teyvat-theme" style="background-image: url('https://upload-os-bbs.hoyolab.com/upload/2021/05/22/21867498/19fb8c0ff0e27428841a05ddbfc0851d_3933469727756591456.jpg'); background-size: cover; background-position: center">
@@ -73,7 +73,7 @@
       </form>
 
       <footer class="card-footer">
-        <p>New Traveler? <a href="register.html" class="switch-link">Create an account</a></p>
+        <p>New Traveler? <a href="register.php" class="switch-link">Create an account</a></p>
       </footer>
 
     </div>
@@ -209,7 +209,7 @@
           passwordVal === DUMMY_USER.password) {
           localStorage.removeItem(STORAGE_ATTEMPTS);
           localStorage.removeItem(STORAGE_LOCKOUT_UNTIL);
-          window.location.href = 'landing_page.html';
+          window.location.href = 'landing_page.php';
           return;
         }
 
